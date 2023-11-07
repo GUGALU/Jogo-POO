@@ -5,8 +5,8 @@ import javax.swing.JFrame;
 import ifpr.paranavai.jogo.modelo.FaseUm;
 
 public class Principal extends JFrame {
-    public static final int LARGURA_DA_JANELA = 1024;
-    public static final int ALTURA_DA_JANELA = 728;
+    public static final int LARGURA_DA_JANELA = 1220;
+    public static final int ALTURA_DA_JANELA = 630;
 
     public Principal() {
         FaseUm fase = new FaseUm();

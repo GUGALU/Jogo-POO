@@ -23,6 +23,7 @@ public class Personagem extends ElementoGrafico {
         super.setPosicaoEmY(POSICAO_INICIAL_EM_Y);
         this.tiros = new ArrayList<Tiro>();
         this.superTiros = new ArrayList<SuperTiro>();
+        this.colissaoBorda();
     }
 
     public void carregar() {
