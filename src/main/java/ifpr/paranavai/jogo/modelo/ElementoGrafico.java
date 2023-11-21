@@ -74,4 +74,20 @@ public abstract class ElementoGrafico {
         this.ehVisivel = ehVisivel;
     }
 
+    public void colissaoBorda() {
+
+        getRectangle();
+        if (posicaoEmX < 0) {
+            posicaoEmX = 0;
+        } else if (posicaoEmX + larguraImagem > 1220) {
+            int borda = 1220 - larguraImagem;
+            posicaoEmX = borda;
+        }
+        if (posicaoEmY < 0) {
+            posicaoEmY = 0;
+        } else if (posicaoEmY + alturaImagem > 630) {
+            int bordaY = 630 - alturaImagem;
+            posicaoEmY = bordaY;
+        }
+    }
 }
