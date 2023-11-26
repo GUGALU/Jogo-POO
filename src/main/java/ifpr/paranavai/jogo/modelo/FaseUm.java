@@ -7,15 +7,30 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import javax.persistence.*;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
+import ifpr.paranavai.jogo.dao.InimigoDao;
+import ifpr.paranavai.jogo.dao.InimigoDaoImpl;
 import ifpr.paranavai.jogo.principal.Principal;
+import ifpr.paranavai.jogo.service.InimigoService;
 
+@Entity
+@Table(name = "tb_faseUm")
 public class FaseUm extends Fase {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "fase_id", unique = true, nullable = false)
+    private Integer idFaseUm;
+    @Column
     private static final int DELAY = 5;
+    @Column
     private static final int QTDE_DE_INIMIGOS = 40;
+    @Column
     private static final int QTDE_DE_ASTEROIDES = 50;
+    @Column
     private static final int PONTOS_POR_INIMIGO = 10;
 
     public FaseUm() { // Linha adicionada (+)
@@ -44,6 +59,7 @@ public class FaseUm extends Fase {
             int y = (int) (Math.random() * Principal.ALTURA_DA_JANELA);
             Inimigo inimigo = new Inimigo(x, y);
             inimigos.add(inimigo);
+            InimigoService.inserir(inimigo);
         }
     }
 
@@ -71,12 +87,19 @@ public class FaseUm extends Fase {
                 graficos.drawImage(tiro.getImagem(), tiro.getPosicaoEmX(), tiro.getPosicaoEmY(), this);
             }
 
+            ArrayList<SuperTiro> superTiros = personagem.getSuperTiros();
+
+            for(SuperTiro superTiro : superTiros){
+                graficos.drawImage(superTiro.getImagem(), superTiro.getPosicaoEmX(), superTiro.getPosicaoEmY(), this);
+            }
+
             // Criando um laço de repetição (foreach). Iremos percorrer toda a lista.
             for (Inimigo inimigo : inimigos) {
                 // Desenhar o inimigo na nossa tela.
                 graficos.drawImage(inimigo.getImagem(), inimigo.getPosicaoEmX(), inimigo.getPosicaoEmY(), this);
             }
             super.desenhaPontuacao(graficos);
+            super.desenhaVida(graficos);
         } else {
             ImageIcon fimDeJogo = new ImageIcon(getClass().getResource("/fimdejogo.png"));
             graficos.drawImage(fimDeJogo.getImage(), 0, 0, this);
@@ -129,7 +152,7 @@ public class FaseUm extends Fase {
         for (int i = 0; i < superTiros.size(); i++) {
             SuperTiro superTiro = superTiros.get(i);
             if (superTiro.getPosicaoEmX() > Principal.LARGURA_DA_JANELA || !superTiro.getEhVisivel())
-                tiros.remove(superTiro);
+                superTiros.remove(superTiro);
             else
                 superTiro.atualizar();
         }
@@ -159,9 +182,16 @@ public class FaseUm extends Fase {
             Inimigo inimigo = inimigos.get(i);
             Rectangle formaInimigo = inimigo.getRectangle();
             if (formaInimigo.intersects(formaPersonagem)) {
-                this.personagem.setEhVisivel(false);
-                inimigo.setEhVisivel(false);
-                emJogo = false;
+                inimigos.remove(inimigo);
+                int vidaAtual = this.personagem.getVidas();
+                this.personagem.setVidas(vidaAtual - 1);
+
+                if(personagem.getVidas() == 0) {
+                    this.personagem.setEhVisivel(false);
+                    inimigo.setEhVisivel(false);
+                    emJogo = false;
+                }
+
             }
             ArrayList<Tiro> tiros = this.personagem.getTiros();
             for (int j = 0; j < tiros.size(); j++) {
@@ -174,6 +204,7 @@ public class FaseUm extends Fase {
                     tiro.setEhVisivel(false);
                 }
             }
+
             ArrayList<SuperTiro> superTiros = this.personagem.getSuperTiros();
             for (int j = 0; j < superTiros.size(); j++) {
                 SuperTiro superTiro = superTiros.get(j);

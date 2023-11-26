@@ -3,18 +3,53 @@ package ifpr.paranavai.jogo.modelo;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import javax.persistence.*;
 import javax.swing.ImageIcon;
 
+@Entity
+@Table(name = "tb_personagem")
 public class Personagem extends ElementoGrafico {
-    private static final int DESLOCAMENTO = 3;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "personagem_id", unique = true, nullable = false)
+    private Integer personagemId;
+    @Column(name = "nome", unique = true, nullable = false, length = 100)
+    private String nome;
+    @Column(name = "vidas", unique = true, nullable = true)
+    private Integer vidas = 3;
+
+    public Personagem(String nome) {
+        this.nome = nome;
+    }
+    public Integer getPersonagemId() {
+        return personagemId;
+    }
+    public void setPersonagemId(Integer personagemId) {
+        this.personagemId = personagemId;
+    }
+    public String getNome() {
+        return nome;
+    }
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+    @Transient
+    private static final int DESLOCAMENTO = 5;
+
+    @Transient
     private static final int POSICAO_INICIAL_EM_X = 100;
+    @Transient
     private static final int POSICAO_INICIAL_EM_Y = 100;
 
+    @Column
     private int deslocamentoEmX;
+    @Column
     private int deslocamentoEmY;
+    @Column
     private int pontuacao;
-
+    @Column
     private ArrayList<Tiro> tiros;
+    @Column
     private ArrayList<SuperTiro> superTiros;
 
     public Personagem() {
@@ -23,7 +58,23 @@ public class Personagem extends ElementoGrafico {
         super.setPosicaoEmY(POSICAO_INICIAL_EM_Y);
         this.tiros = new ArrayList<Tiro>();
         this.superTiros = new ArrayList<SuperTiro>();
-        this.colissaoBorda();
+
+    }
+
+    public void colissaoBorda() {
+        this.getRectangle();
+        if (getPosicaoEmX() < 0) {
+            setPosicaoEmX(0);
+        } else if (getPosicaoEmX() + getLarguraImagem() > 1220) {
+            int borda = 1220 - getLarguraImagem();
+            setPosicaoEmX(borda);
+        }
+        if (getPosicaoEmY() < 0) {
+            setPosicaoEmY(0);
+        } else if (getPosicaoEmY() + getLarguraImagem() > 630) {
+            int bordaY = 630 - getLarguraImagem();
+            setPosicaoEmY(bordaY);
+        }
     }
 
     public void carregar() {
@@ -34,6 +85,7 @@ public class Personagem extends ElementoGrafico {
     public void atualizar() {
         super.setPosicaoEmX(super.getPosicaoEmX() + this.deslocamentoEmX);
         super.setPosicaoEmY(super.getPosicaoEmY() + this.deslocamentoEmY);
+        colissaoBorda();
     }
 
     public void atirar() {
@@ -111,6 +163,14 @@ public class Personagem extends ElementoGrafico {
             default:
                 break;
         }
+    }
+
+    public int getVidas() {
+        return vidas;
+    }
+
+    public void setVidas(int vidas) {
+        this.vidas = vidas;
     }
 
     public int getDeslocamentoEmX() {

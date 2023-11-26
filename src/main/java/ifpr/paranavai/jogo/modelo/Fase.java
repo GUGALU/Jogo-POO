@@ -8,15 +8,23 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
+import javax.persistence.*;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public abstract class Fase extends JPanel implements ActionListener, KeyListener {
+
+
     protected Image fundo;
+
     protected Personagem personagem;
+
     protected ArrayList<Inimigo> inimigos;
+
     protected ArrayList<Asteroide> asteroides;
+
     protected Timer timer;
+
     protected boolean emJogo = true;
 
     public Fase() {
@@ -49,5 +57,12 @@ public abstract class Fase extends JPanel implements ActionListener, KeyListener
         graficos.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 22));
         graficos.setColor(new java.awt.Color(255, 255, 255));
         graficos.drawString(textoPontuacao, 20, 25);
+    }
+
+    public void desenhaVida(Graphics2D graficos) {
+        String textoVidas = "VIDAS: " + personagem.getVidas();
+        graficos.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 22));
+        graficos.setColor(new java.awt.Color(255, 255, 255));
+        graficos.drawString(textoVidas, 150, 25);
     }
 }

@@ -1,50 +1,54 @@
 package ifpr.paranavai.jogo.dao;
-import java.util.List;
+import ifpr.paranavai.jogo.conexao.HibernateUtil;
+import ifpr.paranavai.jogo.modelo.Inimigo;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-import ifpr.paranavai.jogo.conexao.HibernateUtil;
-import ifpr.paranavai.jogo.modelo.Jogador;
-public class JogadorDaoImpl implements JogadorDao {
+import java.util.List;
+
+public class InimigoDaoImpl implements InimigoDao{
     private Session sessao;
-    public JogadorDaoImpl() {
+    public InimigoDaoImpl() {
         this.sessao = HibernateUtil.getSession();
     }
     @Override
-    public List<Jogador> buscarTodos() {
-        Query<Jogador> query = this.sessao.createQuery("from Jogador",
-                Jogador.class);
-        List<Jogador> jogadores = query.getResultList();
-        return jogadores;
+    public List<Inimigo> buscarTodos() {
+        Query<Inimigo> query = this.sessao.createQuery("from InimigoController",
+                Inimigo.class);
+        List<Inimigo> inimigos = query.getResultList();
+        return inimigos;
     }
     @Override
-    public Jogador buscarPorId(Integer id) {
-        return this.sessao.find(Jogador.class, id);
+    public Inimigo buscarPorId(Integer id) {
+        return this.sessao.find(Inimigo.class, id);
     }
+
     @Override
-    public void inserir(Jogador jogador) {
+    public void atualizar(Inimigo inimigo) {
         try {
             sessao.beginTransaction();
-            sessao.persist(jogador);
+            sessao.merge(inimigo);
             sessao.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     @Override
-    public void atualizar(Jogador jogador) {
+    public void excluir(Inimigo inimigo) {
         try {
             sessao.beginTransaction();
-            sessao.merge(jogador);
+            sessao.remove(inimigo);
             sessao.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     @Override
-    public void excluir(Jogador jogador) {
+    public void inserir(Inimigo inimigo) {
         try {
             sessao.beginTransaction();
-            sessao.remove(jogador);
+            sessao.persist(inimigo);
             sessao.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();

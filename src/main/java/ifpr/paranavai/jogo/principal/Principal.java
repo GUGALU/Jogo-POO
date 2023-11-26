@@ -3,6 +3,8 @@ package ifpr.paranavai.jogo.principal;
 import javax.swing.JFrame;
 
 import ifpr.paranavai.jogo.modelo.FaseUm;
+import ifpr.paranavai.jogo.conexao.HibernateUtil;
+import org.hibernate.Session;
 
 public class Principal extends JFrame {
     public static final int LARGURA_DA_JANELA = 1220;
@@ -20,6 +22,7 @@ public class Principal extends JFrame {
     }
 
     public static void main(String[] args) {
+        Session sessao = HibernateUtil.getSession();
         new Principal();
     }
 }

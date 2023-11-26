@@ -1,14 +1,22 @@
 package ifpr.paranavai.jogo.modelo;
 
+import javax.persistence.*;
 import java.awt.Image;
 import java.awt.Rectangle;
 
+
 public abstract class ElementoGrafico {
+
     private int posicaoEmX;
+
     private int posicaoEmY;
+
     private Image imagem;
+
     private int larguraImagem;
+
     private int alturaImagem;
+
     private boolean ehVisivel = true;
 
     public abstract void carregar();
@@ -74,20 +82,5 @@ public abstract class ElementoGrafico {
         this.ehVisivel = ehVisivel;
     }
 
-    public void colissaoBorda() {
 
-        getRectangle();
-        if (posicaoEmX < 0) {
-            posicaoEmX = 0;
-        } else if (posicaoEmX + larguraImagem > 1220) {
-            int borda = 1220 - larguraImagem;
-            posicaoEmX = borda;
-        }
-        if (posicaoEmY < 0) {
-            posicaoEmY = 0;
-        } else if (posicaoEmY + alturaImagem > 630) {
-            int bordaY = 630 - alturaImagem;
-            posicaoEmY = bordaY;
-        }
-    }
 }
