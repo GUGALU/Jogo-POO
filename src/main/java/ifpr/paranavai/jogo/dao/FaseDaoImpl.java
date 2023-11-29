@@ -1,37 +1,37 @@
 package ifpr.paranavai.jogo.dao;
 
 import ifpr.paranavai.jogo.conexao.HibernateUtil;
-import ifpr.paranavai.jogo.modelo.Personagem;
-import ifpr.paranavai.jogo.modelo.SuperTiro;
-import ifpr.paranavai.jogo.modelo.Tiro;
+import ifpr.paranavai.jogo.modelo.Fase;
 import org.hibernate.Session;
-import org.hibernate.query.Query;
 
+import org.hibernate.query.Query;
 import java.util.List;
 
-public class SuperTiroDaoImpl implements SuperTiroDao{
+
+public class FaseDaoImpl implements FaseDao {
     private Session sessao;
-    public SuperTiroDaoImpl() {
+    public FaseDaoImpl() {
         this.sessao = HibernateUtil.getSession();
     }
+
     @Override
-    public List<SuperTiro> buscarTodos() {
-        Query<SuperTiro> query = this.sessao.createQuery("from SuperTiro",
-                SuperTiro.class);
-        List<SuperTiro> superTiros = query.getResultList();
-        return superTiros;
+    public List<Fase> buscarTodos() {
+        Query<Fase> query = this.sessao.createQuery("from Fase",
+                Fase.class);
+        List<Fase> fase = query.getResultList();
+        return fase;
     }
 
     @Override
-    public SuperTiro buscarPorId(Integer id) {
-        return this.sessao.find(SuperTiro.class, id);
+    public Fase buscarPorId(Integer id) {
+        return this.sessao.find(Fase.class, id);
     }
 
     @Override
-    public void atualizar(SuperTiro superTiro) {
+    public void atualizar(Fase fase) {
         try {
             sessao.beginTransaction();
-            sessao.merge(superTiro);
+            sessao.merge(fase);
             sessao.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -39,10 +39,10 @@ public class SuperTiroDaoImpl implements SuperTiroDao{
     }
 
     @Override
-    public void excluir(SuperTiro superTiro) {
+    public void excluir(Fase fase) {
         try {
             sessao.beginTransaction();
-            sessao.remove(superTiro);
+            sessao.remove(fase);
             sessao.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -50,10 +50,10 @@ public class SuperTiroDaoImpl implements SuperTiroDao{
     }
 
     @Override
-    public void inserir(SuperTiro superTiro) {
+    public void inserir(Fase fase) {
         try {
             sessao.beginTransaction();
-            sessao.persist(superTiro);
+            sessao.persist(fase);
             sessao.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();

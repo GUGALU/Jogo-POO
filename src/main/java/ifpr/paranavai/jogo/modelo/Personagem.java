@@ -2,6 +2,7 @@ package ifpr.paranavai.jogo.modelo;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.*;
 import javax.swing.ImageIcon;
@@ -11,46 +12,32 @@ import javax.swing.ImageIcon;
 public class Personagem extends ElementoGrafico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "personagem_id", unique = true, nullable = false)
-    private Integer personagemId;
+    private Integer idPersonagem;
+
+    @OneToOne(mappedBy = "personagem")
+    private Fase fase;
     @Column(name = "nome", unique = true, nullable = false, length = 100)
     private String nome;
-    @Column(name = "vidas", unique = true, nullable = true)
+    @Column
     private Integer vidas = 3;
+    @Column
+    private int pontuacao;
+    @OneToMany(mappedBy = "personagem")
+    @Transient
+    private List<Tiro> tiros;
+    @OneToMany(mappedBy = "personagem")
+    @Transient
+    private List<SuperTiro> superTiros;
+
+    private static final int DESLOCAMENTO = 5;
+    private static final int POSICAO_INICIAL_EM_X = 100;
+    private static final int POSICAO_INICIAL_EM_Y = 100;
+    private int deslocamentoEmX;
+    private int deslocamentoEmY;
 
     public Personagem(String nome) {
         this.nome = nome;
     }
-    public Integer getPersonagemId() {
-        return personagemId;
-    }
-    public void setPersonagemId(Integer personagemId) {
-        this.personagemId = personagemId;
-    }
-    public String getNome() {
-        return nome;
-    }
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-    @Transient
-    private static final int DESLOCAMENTO = 5;
-
-    @Transient
-    private static final int POSICAO_INICIAL_EM_X = 100;
-    @Transient
-    private static final int POSICAO_INICIAL_EM_Y = 100;
-
-    @Column
-    private int deslocamentoEmX;
-    @Column
-    private int deslocamentoEmY;
-    @Column
-    private int pontuacao;
-    @Column
-    private ArrayList<Tiro> tiros;
-    @Column
-    private ArrayList<SuperTiro> superTiros;
 
     public Personagem() {
         this.carregar();
@@ -58,7 +45,6 @@ public class Personagem extends ElementoGrafico {
         super.setPosicaoEmY(POSICAO_INICIAL_EM_Y);
         this.tiros = new ArrayList<Tiro>();
         this.superTiros = new ArrayList<SuperTiro>();
-
     }
 
     public void colissaoBorda() {
@@ -173,36 +159,13 @@ public class Personagem extends ElementoGrafico {
         this.vidas = vidas;
     }
 
-    public int getDeslocamentoEmX() {
-        return this.deslocamentoEmX;
-    }
 
-    public void setDeslocamentoEmX(int deslocamentoEmX) {
-        this.deslocamentoEmX = deslocamentoEmX;
-    }
-
-    public int getDeslocamentoEmY() {
-        return this.deslocamentoEmY;
-    }
-
-    public ArrayList<Tiro> getTiros() {
+    public List<Tiro> getTiros() {
         return this.tiros;
     }
 
-    public ArrayList<SuperTiro> getSuperTiros() {
+    public List<SuperTiro> getSuperTiros() {
         return superTiros;
-    }
-
-    public void setSuperTiros(ArrayList<SuperTiro> superTiros) {
-        this.superTiros = superTiros;
-    }
-
-    public void setTiros(ArrayList<Tiro> tiros) {
-        this.tiros = tiros;
-    }
-
-    public void setDeslocamentoEmY(int deslocamentoEmY) {
-        this.deslocamentoEmY = deslocamentoEmY;
     }
 
     public int getPontuacao() {

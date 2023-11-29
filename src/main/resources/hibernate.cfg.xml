@@ -25,7 +25,8 @@
         <mapping class="ifpr.paranavai.jogo.modelo.Inimigo" />
         <mapping class="ifpr.paranavai.jogo.modelo.Tiro" />
         <mapping class="ifpr.paranavai.jogo.modelo.SuperTiro" />
-        <mapping class="ifpr.paranavai.jogo.modelo.FaseUm" />
+        <mapping class="ifpr.paranavai.jogo.modelo.Fase" />
+        <mapping class="ifpr.paranavai.jogo.modelo.ElementoGrafico" />
 
     </session-factory>
 </hibernate-configuration>

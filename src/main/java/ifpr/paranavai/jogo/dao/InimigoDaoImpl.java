@@ -12,7 +12,7 @@ public class InimigoDaoImpl implements InimigoDao{
     }
     @Override
     public List<Inimigo> buscarTodos() {
-        Query<Inimigo> query = this.sessao.createQuery("from InimigoController",
+        Query<Inimigo> query = this.sessao.createQuery("from Inimigo",
                 Inimigo.class);
         List<Inimigo> inimigos = query.getResultList();
         return inimigos;

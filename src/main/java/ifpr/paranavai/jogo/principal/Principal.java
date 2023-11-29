@@ -2,8 +2,8 @@ package ifpr.paranavai.jogo.principal;
 
 import javax.swing.JFrame;
 
-import ifpr.paranavai.jogo.modelo.FaseUm;
 import ifpr.paranavai.jogo.conexao.HibernateUtil;
+import ifpr.paranavai.jogo.modelo.Fase;
 import org.hibernate.Session;
 
 public class Principal extends JFrame {
@@ -11,7 +11,7 @@ public class Principal extends JFrame {
     public static final int ALTURA_DA_JANELA = 630;
 
     public Principal() {
-        FaseUm fase = new FaseUm();
+        Fase fase = new Fase();
         super.add(fase);
         super.setTitle("Jogo Polli");
         super.setSize(LARGURA_DA_JANELA, ALTURA_DA_JANELA);

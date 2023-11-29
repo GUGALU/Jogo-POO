@@ -1,15 +1,17 @@
 package ifpr.paranavai.jogo.modelo;
 
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import javax.swing.ImageIcon;
 
 import ifpr.paranavai.jogo.principal.Principal;
 
-
+@Entity
+@Table(name = "tb_asteroide")
 public class Asteroide extends ElementoGrafico {
+
+    @ManyToOne
+    @JoinColumn(name = "fk_fase")
+    private Fase fase;
 
     private static int VELOCIDADE = 1;
 

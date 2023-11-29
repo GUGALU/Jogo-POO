@@ -4,24 +4,14 @@ import javax.persistence.*;
 import javax.swing.*;
 
 @Entity
-@Table(name = "tb_tiro")
+@Table(name = "tb_superTiro")
 public class SuperTiro extends ElementoGrafico{
-
-    @Id
-    @Column(unique = true, nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_superTiro;
-
-    public Integer getId_superTiro() {
-        return id_superTiro;
-    }
-
-    public void setId_superTiro(Integer id_superTiro) {
-        this.id_superTiro = id_superTiro;
-    }
+    @ManyToOne
+    @JoinColumn(name = "fk_personagem")
+    private Personagem personagem;
 
     @Transient
-    private static int VELOCIDADE = 3;
+    private static int VELOCIDADE = 10;
 
     public SuperTiro(int posicaoPersonagemEmX, int posicaoPersonagemEmY) {
         this.carregar();

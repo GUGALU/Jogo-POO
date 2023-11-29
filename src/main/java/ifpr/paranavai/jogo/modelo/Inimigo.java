@@ -7,14 +7,9 @@ import javax.swing.ImageIcon;
 @Table(name = "tb_inimigo")
 public class Inimigo extends ElementoGrafico {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "inimigo_id",unique = true, nullable = false)
-    private Integer idInimigo;
-
-    public Inimigo(Integer idInimigo) {
-        this.idInimigo = idInimigo;
-    }
+    @ManyToOne
+    @JoinColumn(name = "fk_fase")
+    private Fase fase;
 
     private static int VELOCIDADE = 2;
 

@@ -15,7 +15,7 @@ public class TiroDaoImpl implements TiroDao {
 
     @Override
     public List<Tiro> buscarTodos() {
-        Query<Tiro> query = this.sessao.createQuery("from TiroController",
+        Query<Tiro> query = this.sessao.createQuery("from Tiro",
                 Tiro.class);
         List<Tiro> tiros = query.getResultList();
         return tiros;

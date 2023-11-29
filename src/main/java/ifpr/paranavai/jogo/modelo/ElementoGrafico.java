@@ -4,19 +4,23 @@ import javax.persistence.*;
 import java.awt.Image;
 import java.awt.Rectangle;
 
-
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class ElementoGrafico {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idElementoGrafico;
+    @Column
     private int posicaoEmX;
-
+    @Column
     private int posicaoEmY;
-
+    @Transient
     private Image imagem;
-
+    @Column
     private int larguraImagem;
-
+    @Column
     private int alturaImagem;
-
+    @Transient
     private boolean ehVisivel = true;
 
     public abstract void carregar();

@@ -6,12 +6,9 @@ import javax.swing.ImageIcon;
 @Entity
 @Table(name = "tb_tiro")
 public class Tiro extends ElementoGrafico {
-
-    @Id
-    @Column(unique = true, nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_tiro;
-
+    @ManyToOne
+    @JoinColumn(name = "fk_personagem")
+    private Personagem personagem;
     private static int VELOCIDADE = 6;
 
     public Tiro(int posicaoPersonagemEmX, int posicaoPersonagemEmY) {
